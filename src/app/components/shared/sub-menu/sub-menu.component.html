@@ -1,16 +1,11 @@
+
 <div class="nav-right nav-menu">
-  <a class="nav-item is-active">
-    Home
-  </a>
-  <a class="nav-item">
-    Carrinho
-  </a>
-  <a class="nav-item">
-    MeuPerfil
-  </a>
+  <a class="nav-item" routerLink="/home">Home</a>
+  <a class="nav-item" routerLink="/cart">Carrinho ({{ totalItems }})</a>
+  <a class="nav-item" routerLink="/">MeuPerfil</a>
 
   <span class="nav-item">
-    <a class="button is-primary is-inverted">
+    <a class="button is-primary is-inverted" routerLink="/" >
       <span class="icon">
         <i class="fa fa-power-off"></i>
       </span>
