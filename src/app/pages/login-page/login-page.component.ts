@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -13,15 +14,15 @@ import { DataService } from '../../services/data.service';
 })
 export class LoginPageComponent implements OnInit {
 
+  public errors: any[] = [];
   public form: FormGroup;
 
-  constructor(private fb: FormBuilder, private ui: Ui, private dataService: DataService) {
+  constructor(private fb: FormBuilder, private ui: Ui, private dataService: DataService, private route: Router) {
     this.form = this.fb.group({
-      email: ['', Validators.compose([
+      username: ['', Validators.compose([
         Validators.minLength(5),
         Validators.maxLength(160),
-        Validators.required,
-        CustomValidator.EmailValidator
+        Validators.required
       ])],
       password: ['', Validators.compose([
         Validators.minLength(6),
@@ -29,30 +30,39 @@ export class LoginPageComponent implements OnInit {
         Validators.required
       ])]
     });
+
+    var token = localStorage.getItem('mws.token');
+    if(token){
+      this.route.navigateByUrl('/home');
+    }
+
+    //this.checkToken();
+  }
+
+  checkToken(){
+    var token = localStorage.getItem('mws.token');
+    if(this.dataService.validateToken(token)){
+      this.route.navigateByUrl('/home');
+    }
+    
   }
 
   //Executado depois que a view ´é renderizada
   ngOnInit() {
-    this.dataService.getCourses().subscribe(result => {
-      console.log(result);
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  checkEmail() {
-
-    this.ui.lock('emailControl');
-
-    setTimeout(() => {
-      this.ui.unlock('emailControl');
-      console.log(this.form.controls['email'].value);
-    }, 3000);
 
   }
 
+ 
   submit() {
-    this.dataService.createUser(this.form.value);
+    this.dataService
+    .authenticate(this.form.value)
+    .subscribe(result=> {
+      localStorage.setItem('mws.token', result.token);
+      localStorage.setItem('mws.user', JSON.stringify(result.user));
+      this.route.navigateByUrl('/home');
+    }, error=>{
+      this.errors = JSON.parse(error._body).errors;
+    });
   }
 
   showModal() {

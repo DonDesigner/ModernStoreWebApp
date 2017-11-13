@@ -7,43 +7,55 @@
 
       <div class="columns">
         <div class="column is-half is-offset-one-quarter">
+          <div class="notification is-danger" *ngIf="errors.length > 0">
+            <ul>
+              <li *ngFor="let error of errors">{{error.message}}</li>
+            </ul>
+          </div>
 
-          <p class="control">
-            <input type="text" class="input is-large" placeholder="Nome">
-          </p>
+          <form [formGroup]="form">
 
-<p class="control">
-            <input type="text" class="input is-large" placeholder="Sobrenome">
-          </p>
+            <p class="control">
+              <input type="text" class="input is-large" placeholder="Nome" formControlName="firstName">
+               <span class="tag is-danger" *ngIf="!form.controls.firstName.valid && !form.controls.firstName.pristine" >Nome inválido</span>
+            </p>
 
-          <p class="control">
-            <input type="text" class="input is-large" placeholder="E-mail">
-          </p>
+            <p class="control">
+              <input type="text" class="input is-large" placeholder="Sobrenome" formControlName="lastName">
+              <span class="tag is-danger" *ngIf="!form.controls.lastName.valid && !form.controls.lastName.pristine" >Sobrenome inválido</span>
+            </p>
 
-<p class="control">
-            <input type="text" class="input is-large" placeholder="CPF">
-          </p>
+            <p class="control">
+              <input type="text" class="input is-large" placeholder="E-mail" formControlName="email">
+              <span class="tag is-danger" *ngIf="!form.controls.email.valid && !form.controls.email.pristine" >E-mail inválido</span>
+            </p>
 
+            <p class="control">
+              <input type="text" class="input is-large" placeholder="CPF" maxlength="11" number formControlName="document">
+              <span class="tag is-danger" *ngIf="!form.controls.document.valid && !form.controls.document.pristine" >CPF inválido</span>
+            </p>
 
+            <p class="control">
+              <input type="text" class="input is-large" placeholder="Usuário" formControlName="userName">
+              <span class="tag is-danger" *ngIf="!form.controls.userName.valid && !form.controls.userName.pristine" >Usuário inválido</span>
+            </p>
 
-          <p class="control">
-            <input type="text" class="input is-large" placeholder="Usuário">
-          </p>
+            <p class="control">
+              <input type="password" class="input is-large" placeholder="Senha" formControlName="password">
+              <span class="tag is-danger" *ngIf="!form.controls.password.valid && !form.controls.password.pristine" >Password inválido</span>
+            </p>
 
-          <p class="control">
-            <input type="password" class="input is-large" placeholder="Senha">
-          </p>
+            <p class="control">
+              <input type="password" class="input is-large" placeholder="Confirmar Senha" formControlName="confirmPassword">
+              <span class="tag is-danger" *ngIf="!form.controls.confirmPassword.valid && !form.controls.confirmPassword.pristine" >Confirme Password inválido</span>
+            </p>
 
-           <p class="control">
-            <input type="password" class="input is-large" placeholder="Confirmar Senha">
-          </p>
-
-          <p>
-            <a href="" class="button is-primary is-inverted is-outlined is-large is-fullwidth">Cadastrar</a>
-            <br>
-            <a href="" class="button is-link is-fullwidth">Voltar para a tela anterior!</a>
-          </p>
-
+            <p>
+              <button (click)="submit()" class="button is-primary is-inverted is-outlined is-large is-fullwidth" [disabled]="!form.valid">Cadastrar</button>
+              <br>
+              <a href="" class="button is-link is-fullwidth">Voltar para a tela anterior!</a>
+            </p>
+          </form>
         </div>
       </div>
 

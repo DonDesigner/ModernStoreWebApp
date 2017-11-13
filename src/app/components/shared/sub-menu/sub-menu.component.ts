@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../../services/cart.service';
 
@@ -8,19 +9,28 @@ import { CartService } from '../../../services/cart.service';
 export class SubMenuComponent implements OnInit {
 
   public totalItems: number = 0;
+  public user: string = '';
 
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService, private router: Router) {
     this.cartService.cartChange.subscribe((data) => {
-      console.log(data);
+      //console.log(data);
       this.totalItems = data.length;
     });
+
+    var data: any = JSON.parse(localStorage.getItem('mws.user'));
+    if(data){
+      this.user = data.name;
+    } 
+    this.cartService.load();
    }
 
   ngOnInit() {
   }
 
-  addItem(){
-    this.cartService.addItem({title:'teste'});
+  logout(){
+    localStorage.removeItem('mws.token');
+    localStorage.removeItem('mws.user');
+    this.router.navigateByUrl('/');
   }
 
 }

@@ -8,10 +8,18 @@
 
       <div class="columns">
         <div class="column is-half is-offset-one-quarter">
+
+            <div class="notification is-danger" *ngIf="errors.length > 0">
+                <ul>
+                  <li *ngFor="let error of errors">{{error.message}}</li>
+                </ul>
+              </div>
+
+
           <form [formGroup]="form">
-            <p class="control" id="emailControl">
-              <input type="email" (blur)="checkEmail()" class="input is-large is-danger" placeholder="E-mail" formControlName="email"  [ngClass]="{'is-danger' :(!form.controls.email.valid && !form.controls.email.pristine)}">
-              <span class="tag is-danger" *ngIf="!form.controls.email.valid && !form.controls.email.pristine" >E-mail inválido</span>
+            <p class="control" id="usernameControl">
+              <input type="username"  class="input is-large is-danger" placeholder="Usuário" formControlName="username"  [ngClass]="{'is-danger' :(!form.controls.username.valid && !form.controls.username.pristine)}">
+              <span class="tag is-danger" *ngIf="!form.controls.username.valid && !form.controls.username.pristine" >Usuário formato inválido</span>
             </p>
 
             <p class="control">
@@ -20,7 +28,7 @@
             </p>
             <p>
               <button (click)="submit()" href="" class="button is-primary is-inverted is-outlined is-large is-fullwidth" [disabled]="!form.valid">Entrar</button>
-              <a href="" class="button is-link is-fullwidth">Fazer cadastro!</a>
+              <a routerLink="/signup" class="button is-link is-fullwidth">Fazer cadastro!</a>
               <br>
              
             </p>

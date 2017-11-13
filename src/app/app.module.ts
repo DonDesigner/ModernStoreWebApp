@@ -1,3 +1,5 @@
+
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,9 +26,14 @@ import { CartPageComponent } from './pages/cart-page/cart-page.component';
 
 //service
 import  { CartService } from './services/cart.service';
+import { AuthService } from './services/auth.service';
+
+//Diretivas
+import { NumberDirective } from './directives/number.directive';
 
 @NgModule({
   declarations: [
+    NumberDirective,
     AppComponent,
     HeadBarComponent,
     SubMenuComponent,
@@ -36,6 +43,7 @@ import  { CartService } from './services/cart.service';
     LoginPageComponent,
     SignupPageComponent,
     CartPageComponent
+   
   ],
   imports: [
     BrowserModule,
@@ -44,7 +52,7 @@ import  { CartService } from './services/cart.service';
     HttpModule,
     Routing
   ],
-  providers: [CartService],
+  providers: [CartService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
